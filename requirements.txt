@@ -13,3 +13,4 @@ dvc
 jupyterlab
 scikit-learn
 argparse
+mlflow
