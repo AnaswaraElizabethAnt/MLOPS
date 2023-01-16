@@ -1,0 +1,7 @@
+{
+    "n_estimators_rf": 200,
+    "max_depth_rf": 5,
+    "learning_rate_xgb": 0.05,
+    "n_estimators_xgb": 200,
+    "max_depth_xgb": 5
+}

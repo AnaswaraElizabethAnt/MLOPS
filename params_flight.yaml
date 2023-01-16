@@ -1,0 +1,41 @@
+base:
+  project: mlops-flight
+  random_state: 42
+  target_col: Price
+
+data_source:
+  s3_source: source_code/flight_course5i.csv
+
+load_data:
+  raw_dataset_csv: data/raw/flight_course5i.csv
+
+split_data:
+  train_path: data/processed/train_flight_course5i.csv
+  test_path: data/processed/test_flight_course5i.csv
+  test_size: 0.2
+
+estimators:
+  XGBoost:
+    params:
+      max_depth: 5
+      learning_rate: 0.05
+      n_estimators : 200
+  
+  RandomForest:
+    params:
+      n_estimators: 200
+      max_depth: 5
+
+model_dir: models
+
+reports :
+  params: reports/params_flight.json
+  scores: reports/scores_flight.json
+
+webapp_model_dir: prediction_service/model/model_flight.joblib
+
+
+
+
+
+
