@@ -35,12 +35,21 @@ def log_production_model(config_path):
     remote_server_uri = mlflow_config["remote_server_uri"]
     mlflow.set_tracking_uri(remote_server_uri)
     runs=mlflow.search_runs([1])
-    lowest=runs["metrics.r2"].sort_values(ascending=True)[0]
-    lowest_run_id= runs[runs["metrics.r2"]==lowest]["run_id"][0]
+    
+    lowest = min(runs["metrics.rmse"])
+    lowest_list = list(runs["metrics.rmse"])
+    lowest_val_id = lowest_list.index(lowest)
+    print('the lowest list is ', runs["metrics.rmse"].sort_values(ascending=True))
+    print('lowest is ',lowest)
+    print("lowest_list: ",lowest_list)
+    print("lowest_val_id: ",lowest_val_id)
+    lowest_run_id = runs[runs['metrics.rmse']== lowest]['run_id'][lowest_val_id]
+    print("lowest_run_id: ",lowest_run_id)
     client=MlflowClient()
     for mv in client.search_model_versions(f"name = '{model_name}'"):
         mv=dict(mv)
         if mv["run_id"] == lowest_run_id:
+            print(mv)
             current_version=mv["version"]
             logged_model= mv["source"]
             pprint(mv,indent=4)
